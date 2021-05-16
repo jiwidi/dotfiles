@@ -87,5 +87,13 @@
 		"--aggressive ",
 		"--aggressive"
 	],
-	"workbench.iconTheme": "vscode-icons"
+	"workbench.iconTheme": "vscode-icons",
+	"workbench.editorAssociations": [
+		{
+			"viewType": "jupyter.notebook.ipynb",
+			"filenamePattern": "*.ipynb"
+		}
+	],
+	"html.format.indentInnerHtml": true,
+	"python.formatting.provider": "black"
 }
