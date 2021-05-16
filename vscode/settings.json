@@ -76,7 +76,6 @@
 	"go.buildFlags": [
 		"-v"
 	],
-	"editor.fontFamily": "'JetBrains Mono', Hack, Menlo, Monaco, 'Courier New', monospace",
 	"editor.smoothScrolling": true,
 	"files.exclude": {
 		"yarn.lock": true
@@ -87,5 +86,6 @@
 	"python.formatting.autopep8Args": [
 		"--aggressive ",
 		"--aggressive"
-	]
+	],
+	"workbench.iconTheme": "vscode-icons"
 }

@@ -1,4 +1,4 @@
-function h -d "quick cd into $HOME"
+function home -d "quick cd into $HOME"
 	cd $HOME/$argv
 end
 
@@ -12,4 +12,4 @@ function __h_complete
 	builtin cd $saved_pwd
 end
 
-complete --command h --arguments '(__h_complete)'
+complete --command home --arguments '(__h_complete)'

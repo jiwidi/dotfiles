@@ -19,7 +19,7 @@ First, make sure you have all those things installed:
 Macos
 
 ```console
-$ brew install fish bat git-delta dog exa fd fzf gh grc kubectx ripgrep starship
+$ brew install fish bat git-delta dog exa fd fzf gh grc kubectx ripgrep starship tmux
 ```
 
 On Ubuntu:
