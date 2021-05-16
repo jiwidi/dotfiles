@@ -83,7 +83,7 @@
 	},
 	"git.autofetch": true,
 	"explorer.confirmDelete": false,
-	"editor.fontSize": 15,
+	"editor.fontSize": 14,
 	"python.formatting.autopep8Args": [
 		"--aggressive ",
 		"--aggressive"
