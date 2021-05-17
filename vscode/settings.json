@@ -72,7 +72,7 @@
 		"format": true,
 		"autoComplete": true
 	},
-	"window.newWindowDimensions": "maximized",
+	"window.newWindowDimensions": "normal",
 	"go.buildFlags": [
 		"-v"
 	],
