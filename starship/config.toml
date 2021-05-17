@@ -9,6 +9,9 @@ disabled = true
 [python]
 disabled = true
 
+[conda]
+format = ""
+
 [git_status]
 format = "[$ahead_behind$untracked$modified]($style)"
 

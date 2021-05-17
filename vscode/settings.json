@@ -95,5 +95,7 @@
 		}
 	],
 	"html.format.indentInnerHtml": true,
-	"python.formatting.provider": "black"
+	"python.formatting.provider": "black",
+	"editor.comments.insertSpace": true,
+	"editor.detectIndentation": false
 }
