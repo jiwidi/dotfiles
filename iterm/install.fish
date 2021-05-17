@@ -5,3 +5,6 @@ case Darwin
 		and defaults write com.googlecode.iterm2 PrefsCustomFolder -string $DOTFILES/iterm
 		and defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 end
+
+#Remove last login prompt
+touch ~/.hushlogin

@@ -2,8 +2,19 @@
 
 # makes prompt a single line
 add_newline = false
+
 [line_break]
 disabled = true
 
 [python]
 disabled = true
+
+[git_status]
+format = "[$ahead_behind$untracked$modified]($style)"
+
+[git_branch]
+format = "[$branch]($style) "
+
+[git_commit]
+commit_hash_length = 4
+tag_symbol = "🔖 "
