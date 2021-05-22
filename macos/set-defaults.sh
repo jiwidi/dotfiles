@@ -28,9 +28,6 @@ sudo -v
 
 echo ""
 echo "› System:"
-echo "  › Enable press-and-hold for keys in favor of key repeat"
-defaults write -g ApplePressAndHoldEnabled -bool true
-
 echo "  › Use AirDrop over every interface"
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
@@ -39,10 +36,6 @@ chflags nohidden ~/Library
 
 echo "  › Show the /Volumes folder"
 sudo chflags nohidden /Volumes
-
-echo "  › Set a really fast key repeat"
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 8
 
 echo "  › Enable text replacement almost everywhere"
 defaults write -g WebAutomaticTextReplacementEnabled -bool true
