@@ -28,6 +28,8 @@ sudo -v
 
 echo ""
 echo "› System:"
+echo "  › Mouse Focus follow pointer"
+defaults write com.apple.Terminal FocusFollowsMouse -bool true
 echo "  › Use AirDrop over every interface"
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
