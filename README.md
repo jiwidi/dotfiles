@@ -16,6 +16,8 @@ First, make sure you have all those things installed:
 
 ### Install
 
+Setup dependencies first.
+
 Macos
 
 ```console
