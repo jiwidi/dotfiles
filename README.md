@@ -28,7 +28,7 @@ On Ubuntu:
 
 ```console
 $ sh -c "$(curl -fsSL https://starship.rs/install.sh)"
-$ sudo apt install fish grc fzf
+$ sudo apt install fish grc fzf exa
 ```
 
 Then, run these steps:
