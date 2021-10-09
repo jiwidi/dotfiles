@@ -27,14 +27,14 @@ $ brew install fish bat git-delta dog exa fd fzf gh grc kubectx ripgrep starship
 On Ubuntu:
 
 ```console
-sh -c "$(curl -fsSL https://starship.rs/install.sh)"
-sudo apt install fish grc fzf
+$ sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+$ sudo apt install fish grc fzf
 ```
 
 Then, run these steps:
 
 ```console
-$ git clone https://github.com/jiwidi/dotfiles.fish.git ~/.dotfiles
+$ git clone https://github.com/jiwidi/dotfiles.git ~/.dotfiles
 $ cd ~/.dotfiles
 $ ./script/bootstrap.fish
 ```
