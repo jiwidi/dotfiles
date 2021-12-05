@@ -42,6 +42,13 @@ sudo chflags nohidden /Volumes
 echo "  › Enable text replacement almost everywhere"
 defaults write -g WebAutomaticTextReplacementEnabled -bool true
 
+echo "  › Installing EURKEY input"
+sudo wget https://raw.githubusercontent.com/jonasdiemer/EurKEY-Mac/master/EurKEY.icns -P /Library/Keyboard\ Layouts/ >/dev/null 2>&1
+sudo wget https://raw.githubusercontent.com/jonasdiemer/EurKEY-Mac/master/EurKEY.keylayout -P /Library/Keyboard\ Layouts/ >/dev/null 2>&1
+
+# echo "  › Enable three point drag"
+# defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerSwipeGesture -int 1
+
 echo "  › Turn off keyboard illumination when computer is not used for 5 minutes"
 defaults write com.apple.BezelServices kDimTime -int 300
 
@@ -49,7 +56,7 @@ echo "  › Require password immediately after sleep or screen saver begins"
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-echo "  > Mute startup sound"
+echo "  › Mute startup sound"
 defaults write com.apple.loginwindow LogoutHook /path/to/silence.sh
 
 
@@ -72,6 +79,13 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 echo "  › Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+echo "  › Changing screeenshot location to ~/Desktop/Screenshots"
+mkdir ~/Desktop/screenshoots
+defaults write com.apple.screencapture location ~/Desktop/screenshoots
+
+echo "  › Making icons on desktop unseen on the desktop"
+defaults write com.apple.finder CreateDesktop false && killall Finder
 
 echo "  › Set up trackpad & mouse speed to a reasonable number"
 defaults write -g com.apple.trackpad.scaling 2

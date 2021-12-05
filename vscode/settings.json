@@ -89,16 +89,24 @@
         "--aggressive ",
         "--aggressive"
     ],
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
     "editor.detectIndentation": false,
     "workbench.tree.renderIndentGuides": "none",
     "[javascript]": {
         "editor.defaultFormatter": "HookyQR.beautify"
-    }
+    },
+    "[html]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "html.format.enable": false,
+    "html.format.wrapLineLength": 150,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "editor.inlineSuggest.enabled": true,
+    "python.defaultInterpreterPath": "/Users/jaimeferrando/miniconda3/bin/python"
 
 }
