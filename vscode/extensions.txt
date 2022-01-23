@@ -3,12 +3,16 @@ DavidAnson.vscode-markdownlint
 dracula-theme.theme-dracula
 eamodio.gitlens
 formulahendry.auto-close-tag
+GitHub.copilot
 golang.go
+hnw.vscode-auto-open-markdown-preview
 HookyQR.beautify
 ms-azuretools.vscode-docker
 ms-python.python
 ms-python.vscode-pylance
 ms-toolsai.jupyter
+ms-toolsai.jupyter-keymap
+ms-toolsai.jupyter-renderers
 ms-vscode-remote.remote-containers
 ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
@@ -19,6 +23,7 @@ pnp.polacode
 ritwickdey.LiveServer
 skyapps.fish-vscode
 tomoki1207.pdf
+TrungNgo.autoflake
 vscode-icons-team.vscode-icons
 yzhang.markdown-all-in-one
 zxh404.vscode-proto3

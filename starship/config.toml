@@ -12,6 +12,9 @@ disabled = true
 [conda]
 format = ""
 
+[gcloud]
+format = ""
+
 [git_status]
 format = "[$ahead_behind$untracked$modified]($style)"
 

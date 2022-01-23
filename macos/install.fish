@@ -19,3 +19,7 @@ funcsave __fish_complete_man
 
 function __fish_describe_command; end
 funcsave __fish_describe_command
+
+
+#Install nice to have programs
+brew install --cask stats

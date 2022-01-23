@@ -107,6 +107,7 @@
         "jupyter-notebook": "left"
     },
     "editor.inlineSuggest.enabled": true,
-    "python.defaultInterpreterPath": "/Users/jaimeferrando/miniconda3/bin/python"
+    "python.defaultInterpreterPath": "/Users/jaimeferrando/miniconda3/bin/python",
+    "vsicons.dontShowNewVersionMessage": true
 
 }
