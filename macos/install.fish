@@ -23,3 +23,4 @@ funcsave __fish_describe_command
 
 #Install nice to have programs
 brew install --cask stats
+brew install --cask rectangle
