@@ -25,3 +25,8 @@ funcsave __fish_describe_command
 brew install --cask stats
 brew install --cask rectangle
 brew install only-switch
+brew install btop
+
+if command -qa btop
+    abbr -a top 'btop'
+end
