@@ -72,15 +72,19 @@ $ fd -e backup -e local -H -E Library -d 3 .
 
 And then manually inspect/revert them.
 
-## macOS defaults
+## macOS extras
 
-You use it by running:
+Install default values for settings by running:
 
 ```console
 ~/.dotfiles/macos/set-defaults.sh
 ```
 
 And logging out and in again or restart.
+
+Python env setup:
+
+Install https://github.com/conda-forge/miniforge and set it on fish with `conda init fish`
 
 ## Themes and fonts being used
 
