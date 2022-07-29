@@ -39,6 +39,8 @@ chflags nohidden ~/Library
 echo "  › Show the /Volumes folder"
 sudo chflags nohidden /Volumes
 
+echo "  › Scroll direction"
+defaults write -g com.apple.swipescrolldirection -bool FALSE
 echo "  › Enable text replacement almost everywhere"
 defaults write -g WebAutomaticTextReplacementEnabled -bool true
 
@@ -179,7 +181,7 @@ defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool true
 #############################
 
 echo ""
-echo "› Dock"
+echo "› 1"
 echo "  › Setting the icon size of Dock items to 45 pixels for optimal size/screen-realestate"
 defaults write com.apple.dock tilesize -int 45
 
