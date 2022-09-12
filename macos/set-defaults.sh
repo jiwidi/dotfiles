@@ -83,8 +83,8 @@ echo "  › Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 echo "  › Changing screeenshot location to ~/Desktop/Screenshots"
-mkdir ~/Desktop/screenshoots
-defaults write com.apple.screencapture location ~/Desktop/screenshoots
+mkdir ~/Desktop/screenshots
+defaults write com.apple.screencapture location ~/Desktop/screenshots
 
 echo "  › Making icons on desktop unseen on the desktop"
 defaults write com.apple.finder CreateDesktop false && killall Finder
