@@ -29,6 +29,7 @@ brew install --cask iterm2
 brew install --cask telegram-desktop
 brew install --cask slack
 brew install --cask spotify
+brew install --cask maccy
 brew install only-switch
 brew install btop
 
