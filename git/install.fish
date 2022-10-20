@@ -8,6 +8,9 @@ case '*'
 	git config --global credential.helper cache
 end
 
+# auto set remotes when pushing
+git config --global push.autoSetupRemote true
+
 # better diffs
 if command -qs delta
 	git config --global core.pager delta
