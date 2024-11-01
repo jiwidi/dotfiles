@@ -32,7 +32,6 @@ $ cd ~/.dotfiles
 $ ./script/bootstrap.fish
 ```
 
-> All changed files will be backed up with a `.backup` suffix.
 
 If you have any problems with fish not recognizing commands/wrong path variable check https://stackoverflow.com/questions/66724016/my-fish-is-blind-fish-does-not-recognise-any-commands-after-setting-it-as-defa
 
