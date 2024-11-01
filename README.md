@@ -21,14 +21,7 @@ Setup dependencies first.
 Macos
 
 ```console
-$ brew install fish bat git-delta dog exa fd fzf gh grc kubectx ripgrep starship tmux
-```
-
-On Ubuntu:
-
-```console
-$ sh -c "$(curl -fsSL https://starship.rs/install.sh)"
-$ sudo apt install fish grc fzf exa
+$ brew install fish bat git-delta dog exa fd fzf gh grc kubectx ripgrep starship tmux sketchybar aerospace
 ```
 
 Then, run these steps:
@@ -39,7 +32,7 @@ $ cd ~/.dotfiles
 $ ./script/bootstrap.fish
 ```
 
-> All changed files will be backed up with a `.backup` suffix. 
+> All changed files will be backed up with a `.backup` suffix.
 
 If you have any problems with fish not recognizing commands/wrong path variable check https://stackoverflow.com/questions/66724016/my-fish-is-blind-fish-does-not-recognise-any-commands-after-setting-it-as-defa
 
@@ -72,9 +65,9 @@ $ fd -e backup -e local -H -E Library -d 3 .
 
 And then manually inspect/revert them.
 
-## macOS extras
+## macOS defaults
 
-Install default values for settings by running:
+Install default values for quality of life improvements for settings by running:
 
 ```console
 ~/.dotfiles/macos/set-defaults.sh
