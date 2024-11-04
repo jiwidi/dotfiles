@@ -20,7 +20,10 @@ start-at-login = true
 # Run Sketchybar together with AeroSpace
 # sketchbar has a built-in detection of already running process,
 # so it won't be run twice on AeroSpace restart
-after-startup-command = ['exec-and-forget sketchybar']
+after-startup-command = [
+  'exec-and-forget sketchybar',
+  'exec-and-forget borders style=border width=7.0 active_color=0xff00ff00 inactive_color=0x00000000',
+]
 
 # Notify Sketchybar about workspace change
 exec-on-workspace-change = [
@@ -58,11 +61,11 @@ key-mapping.preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 0
-inner.vertical = 0
-outer.bottom = 0
-outer.left = 0
-outer.right = 0
+inner.horizontal = 5
+inner.vertical = 5
+outer.bottom = 5
+outer.left = 5
+outer.right = 5
 outer.top = [{monitor."main" = 5}, 40]
 
 # See https://nikitabobko.github.io/AeroSpace/guide#exec-env-vars
@@ -106,6 +109,11 @@ alt-k = 'focus up'
 alt-l = 'focus right'
 
 alt-f = 'fullscreen'
+
+alt-ctrl-h = ['join-with left', 'mode main']
+alt-ctrl-j = ['join-with down', 'mode main']
+alt-ctrl-k = ['join-with up', 'mode main']
+alt-ctrl-l = ['join-with right', 'mode main']
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
 alt-shift-h = 'move left'

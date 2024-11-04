@@ -1,4 +1,5 @@
 PLUGIN_DIR="$CONFIG_DIR/plugins"
+SPOTIFY_EVENT="com.spotify.client.PlaybackStateChanged"
 
 ##### Bar Appearance #####
 sketchybar --bar position=top height=40 blur_radius=30 color=0x40000000

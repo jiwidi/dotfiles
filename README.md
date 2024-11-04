@@ -21,7 +21,7 @@ Setup dependencies first.
 Macos
 
 ```console
-$ brew install fish bat git-delta dog exa fd fzf gh grc kubectx ripgrep starship tmux sketchybar aerospace
+$ brew install fish bat git-delta dog exa fd fzf gh grc kubectx ripgrep starship tmux sketchybar aerospace borders
 ```
 
 Then, run these steps:
