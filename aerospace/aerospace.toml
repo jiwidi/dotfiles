@@ -61,9 +61,9 @@ key-mapping.preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 5
-inner.vertical = 5
-outer.bottom = 5
+inner.horizontal = 10
+inner.vertical = 8
+outer.bottom = 10
 outer.left = 5
 outer.right = 5
 outer.top = [{monitor."main" = 5}, 40]
@@ -125,7 +125,7 @@ alt-shift-l = 'move right'
 alt-shift-equal = 'resize smart +50'
 alt-shift-minus = 'resize smart -50'
 
-alt-0 = 'exec-and-forget touch ~/.triggered'
+alt-0 = 'workspace 0'
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
@@ -136,7 +136,7 @@ alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 
-alt-shift-0 = 'move-node-to-workspace 10'
+alt-shift-0 = 'move-node-to-workspace 0'
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3'

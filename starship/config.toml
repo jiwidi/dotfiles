@@ -28,33 +28,32 @@ truncation_length = 10
 commit_hash_length = 4
 tag_symbol = "🔖"
 
-
 [battery]
-full_symbol = "🔋"
-charging_symbol = "🔌"
+charging_symbol = "�"
 discharging_symbol = "⚡"
+full_symbol = "🔋"
 
 [[battery.display]]
-threshold = 30
 style = "bold red"
+threshold = 30
 
 [character]
 error_symbol = "[✖](bold red) "
 
 [cmd_duration]
-min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
-format = " took [$duration]($style)"
+format = " took [$duration]($style)" 
+min_time = 10_000 # Show command duration over 10,000 milliseconds (=10 sec)
 
 [hostname]
-ssh_only = false
-format = "<[$hostname]($style)>"
-trim_at = "-"
-style = "bold dimmed white"
 disabled = true
+format = "<[$hostname]($style)>"
+ssh_only = false
+style = "bold dimmed white"
+trim_at = "-"
 
 [username]
-style_user = "bold dimmed blue"
 show_always = false
+style_user = "bold dimmed blue"
 
 [directory]
 truncation_length = 5
