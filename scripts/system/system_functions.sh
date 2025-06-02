@@ -221,12 +221,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
-# Directory listing shortcuts
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Safety aliases
+# Safety aliases (directory listing handled by exa module)
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'

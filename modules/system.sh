@@ -85,13 +85,7 @@ setopt NO_CASE_GLOB
 setopt NUMERIC_GLOB_SORT
 setopt EXTENDED_GLOB
 
-# Colored output for common commands
-if command -v gls > /dev/null 2>&1; then
-    alias ls="gls --color=auto"
-elif ls --color=auto &> /dev/null; then
-    alias ls="ls --color=auto"
-fi
-
+# Colored output for common commands (ls handled by exa module)
 alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"

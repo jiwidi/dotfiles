@@ -90,6 +90,9 @@ setup_sketchybar_config() {
         "battery.sh"
         "volume.sh"
         "wifi.sh"
+        "slack.sh"
+        "telegram.sh"
+        "weather.sh"
     )
     
     for plugin in "${plugins[@]}"; do
