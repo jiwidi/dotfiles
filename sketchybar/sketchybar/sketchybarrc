@@ -31,20 +31,19 @@ sketchybar --default "${default[@]}"
 
 
 #### Aerospace right items
+# Define an event to listen for workspace changes
 sketchybar --add event aerospace_workspace_change
 
-for sid in $(aerospace list-workspaces --all); do
-    sketchybar --add item space.$sid left \
-        --subscribe space.$sid aerospace_workspace_change \
-        --set space.$sid \
-        background.color=0x44ffffff \
-        background.corner_radius=5 \
-        background.height=20 \
-        background.drawing=off \
-        label="$sid" \
-        click_script="aerospace workspace $sid" \
-        script="$CONFIG_DIR/plugins/aerospace.sh $sid"
-done
+sketchybar --add item current_workspace left \
+    --subscribe current_workspace aerospace_workspace_change \
+    --set current_workspace \
+    background.color=0xff000000 \
+    background.corner_radius=5 \
+    background.height=20 \
+    label="" \
+    script="$CONFIG_DIR/plugins/aerospace.sh"
+
+
 
 ##### Adding Left Items #####
 # We add some regular items to the left side of the bar, where
@@ -68,13 +67,21 @@ sketchybar --add item clock right \
            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
            --subscribe battery system_woke power_source_change
 
+sketchybar  --add   item telegram right \
+            --set   telegram \
+                    update_freq=1 \
+                    script="$PLUGIN_DIR/telegram.sh" \
+                    icon.font.size=20 \
+                    click_script="open -a 'Telegram'" \
+           --subscribe telegram system_woke
+
 sketchybar  --add   item slack right \
             --set   slack \
-                    update_freq=180 \
+                    update_freq=1 \
                     script="$PLUGIN_DIR/slack.sh" \
-                    icon.font.size=20 \
+                    # icon.font.size=20 \
                     click_script="open -a 'Slack'" \
-           --subscribe slack system_woke
+        #    --subscribe slack system_woke
 
 # Adding the Weather Item to SketchyBar (right side of the bar)
 sketchybar --add item weather right \

@@ -1,9 +1,13 @@
 #!/usr/bin/env sh
 
 # Fetch the StatusLabel from Slack, which often contains the notification count
-STATUS_LABEL=$(lsappinfo info -only StatusLabel "Slack" | grep -o '"StatusLabel"="[^"]*"' | cut -d'"' -f4)
+STATUS_OUTPUT=$(lsappinfo info -only StatusLabel "Slack")
 
-ICON=""  # Slack icon (you can replace this with a more compact icon if desired)
+# Extract the "label" value from the output
+STATUS_LABEL=$(echo "$STATUS_OUTPUT" | sed -n 's/.*"label"="\([^"]*\)".*/\1/p')
+
+# Slack icon
+ICON=""
 
 # Trim whitespace from STATUS_LABEL
 LABEL=$(echo "$STATUS_LABEL" | xargs)

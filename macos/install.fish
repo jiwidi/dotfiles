@@ -20,17 +20,6 @@ funcsave __fish_complete_man
 function __fish_describe_command; end
 funcsave __fish_describe_command
 
-
-#Install nice to have programs
-brew install --cask stats
-brew install --cask rectangle
-brew install --cask topnotch
-brew install --cask iterm2
-brew install --cask telegram-desktop
-brew install --cask slack
-brew install --cask spotify
-brew install --cask maccy
-brew install only-switch
 brew install btop
 
 if command -qa btop

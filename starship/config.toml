@@ -1,16 +1,23 @@
-# ~/.dotfiles/startship/starship.toml
+# ~/.config/starship.toml
 
-# makes prompt a single line
+# Makes prompt a single line
 add_newline = false
+
+[nodejs]
+disabled = true
 
 [line_break]
 disabled = true
 
+# Enable the Python module to display the active virtual environment managed by `uv`
 [python]
-disabled = true
+disabled = false
+# Customize the format to display the virtual environment
+format = "🐍 [$virtualenv]($style) "
 
+# Disable the Conda module to prevent Conda environments from being displayed
 [conda]
-format = ""
+disabled = true
 
 [gcloud]
 format = ""
@@ -29,9 +36,9 @@ commit_hash_length = 4
 tag_symbol = "🔖"
 
 [battery]
-charging_symbol = "�"
-discharging_symbol = "⚡"
-full_symbol = "🔋"
+charging_symbol = "⚡" # Corrected the charging symbol
+discharging_symbol = "🔋" 
+full_symbol = "🔋" 
 
 [[battery.display]]
 style = "bold red"
@@ -50,6 +57,10 @@ format = "<[$hostname]($style)>"
 ssh_only = false
 style = "bold dimmed white"
 trim_at = "-"
+
+[aws]
+format = ''
+style = 'bold blue'
 
 [username]
 show_always = false
