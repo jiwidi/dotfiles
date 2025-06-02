@@ -1,0 +1,79 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+.classpath
+.project
+.settings/
+
+# Version files
+.java-version
+.ruby-version
+.python-version
+.node-version
+
+# Backup files
+*.orig
+*.bak
+*.backup
+
+# Log files
+*.log
+
+# Compiled files
+*.class
+*.o
+*.so
+*.dll
+
+# Dependencies
+node_modules/
+vendor/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Database
+dump.rdb
+*.sqlite
+*.sqlite3
+*.db
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+main.tfvars
+
+# OS specific
+Thumbs.db
+ehthumbs.db

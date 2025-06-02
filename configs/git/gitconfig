@@ -1,0 +1,97 @@
+[difftool "diffmerge"]
+	cmd = diffmerge $LOCAL $REMOTE
+
+[alias]
+	co = checkout
+	count = shortlog -sn
+	g = grep --break --heading --line-number
+	gi = grep --break --heading --line-number -i
+	changed = show --pretty=\"format:\" --name-only
+	fm = fetch-merge
+	please = push --force-with-lease
+	commend = commit --amend --no-edit
+	lt = log --tags --decorate --simplify-by-decoration --oneline
+	
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = true
+	
+[core]
+	excludesfile = ~/.gitignore_global
+	editor = code --wait
+	compression = -1
+	autocrlf = input
+	whitespace = trailing-space,space-before-tab
+	precomposeunicode = true
+	
+[apply]
+	whitespace = nowarn
+	
+[help]
+	autocorrect = 1
+	
+[merge]
+	tool = vscode
+	
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
+	
+[diff]
+	tool = vscode
+	colorMoved = default
+	
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+	
+[difftool]
+	prompt = false
+	
+[grep]
+	extendRegexp = true
+	lineNumber = true
+	
+[push]
+	default = simple
+	autoSetupRemote = true
+	
+[submodule]
+	fetchJobs = 4
+	
+[commit]
+	template = ~/.git_commit_template
+	
+[log]
+	showSignature = false
+	
+[pull]
+	ff = only
+	rebase = false
+	
+[init]
+	defaultBranch = main
+	
+[branch]
+	sort = -committerdate
+	
+[tag]
+	sort = version:refname
+	
+[rerere]
+	enabled = true
+	
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Dracula
+	
+[interactive]
+	diffFilter = delta --color-only
+
+[pager]
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta

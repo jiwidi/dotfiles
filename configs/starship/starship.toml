@@ -1,0 +1,177 @@
+# Starship prompt configuration
+# Clean, fast, and informative prompt
+
+# Global settings
+add_newline = false
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$git_state\
+$python\
+$nodejs\
+$rust\
+$go\
+$package\
+$docker_context\
+$cmd_duration\
+$line_break\
+$character"""
+
+# =============================================================================
+# CORE MODULES
+# =============================================================================
+
+# Directory display - shortened but informative
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+fish_style_pwd_dir_length = 1
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "cyan bold"
+read_only = "🔒"
+read_only_style = "red"
+
+# Command execution time - show for commands over 2 seconds
+[cmd_duration]
+format = "took [$duration]($style) "
+min_time = 2_000
+style = "yellow bold"
+show_milliseconds = false
+
+# Prompt character
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vicmd_symbol = "[❮](bold yellow)"
+
+# =============================================================================
+# GIT INTEGRATION
+# =============================================================================
+
+[git_branch]
+format = "on [$symbol$branch]($style) "
+symbol = "🌱 "
+style = "purple bold"
+truncation_length = 20
+truncation_symbol = "…"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "red bold"
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+conflicted = "🏳"
+up_to_date = "✓"
+untracked = "🤷"
+stashed = "📦"
+modified = "📝"
+staged = "➕"
+renamed = "👅"
+deleted = "🗑"
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+style = "bright-black"
+
+[git_commit]
+commit_hash_length = 7
+tag_symbol = "🔖 "
+format = "[$hash$tag]($style) "
+style = "green bold"
+
+# =============================================================================
+# DEVELOPMENT ENVIRONMENTS
+# =============================================================================
+
+# Python
+[python]
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol = "🐍 "
+style = "yellow bold"
+pyenv_version_name = true
+
+# Node.js - enable and show when relevant
+[nodejs]
+format = "[$symbol($version )]($style)"
+symbol = "⬢ "
+style = "green bold"
+detect_files = ["package.json", ".nvmrc"]
+detect_folders = ["node_modules"]
+
+# Rust
+[rust]
+format = "[$symbol($version )]($style)"
+symbol = "🦀 "
+style = "red bold"
+
+# Go
+[golang]
+format = "[$symbol($version )]($style)"
+symbol = "🐹 "
+style = "cyan bold"
+
+# =============================================================================
+# SYSTEM INFO
+# =============================================================================
+
+# Username (show for SSH, root, or different user)
+[username]
+show_always = false
+style_user = "blue bold"
+style_root = "red bold"
+format = "[$user]($style) "
+
+# Hostname (show for SSH connections)
+[hostname]
+ssh_only = true
+format = "at [$hostname]($style) "
+style = "green bold"
+trim_at = "."
+
+# Package version
+[package]
+format = "pkg [$version]($style) "
+style = "208 bold"
+
+# Docker context
+[docker_context]
+format = "via [$symbol$context]($style) "
+symbol = "🐳 "
+style = "blue bold"
+
+# =============================================================================
+# DISABLED MODULES
+# =============================================================================
+
+# Disable cloud providers
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[azure]
+disabled = true
+
+# Disable less common tools
+[conda]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[terraform]
+disabled = true
+
+[battery]
+disabled = true
+
+[time]
+disabled = true
+
+[line_break]
+disabled = true

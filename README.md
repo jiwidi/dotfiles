@@ -1,93 +1,145 @@
+# Dotfiles
 
+A clean, modular macOS dotfiles setup with zsh-based installation scripts.
 
-Forked from carlos fish dotfiles [dotfiles](https://github.com/caarlos0/dotfiles). This is my personal fork with some minor tweaks/changes.
+## Features
+
+This dotfiles setup includes configurations for:
+
+- **🔍 fzf** - Fuzzy finder with Dracula theme
+- **🪟 AeroSpace** - Tiling window manager with vi-like keybindings  
+- **🐱 bat** - Better cat with syntax highlighting
+- **📁 exa** - Better ls with colors and icons
+- **🔎 fd** - Better find command
+- **📝 Git** - Enhanced git configuration with delta and useful functions
+- **📊 htop** - System monitor with custom layout
+- **🍺 Homebrew** - Enhanced brew wrapper with additional commands
+- **🍎 macOS** - Comprehensive system defaults and optimizations
+- **📊 SketchyBar** - Custom status bar with system info
+- **⭐ Starship** - Cross-shell prompt with git integration
+- **🛠 System** - Useful utility functions and shell improvements
+- **💻 Terminal** - Custom Terminal.app profile
 
 ## Installation
 
-### Dependencies
+### Quick Install (All Components)
 
-First, make sure you have all those things installed:
-
-- `git`: to clone the repo
-- `curl`: to download some stuff
-- `tar`: to extract downloaded stuff
-- `fish`: the shell
-- `sudo`: some configs may need that
-
-### Install
-
-Setup dependencies first.
-
-Macos
-
-```console
-$ brew install fish bat git-delta dog exa fd fzf gh grc kubectx ripgrep starship tmux sketchybar aerospace borders
+```bash
+./install.sh
 ```
 
-Then, run these steps:
+### Selective Install
 
-```console
-$ git clone https://github.com/jiwidi/dotfiles.git ~/.dotfiles
-$ cd ~/.dotfiles
-$ ./script/bootstrap.fish
+Install specific components:
+
+```bash
+./install.sh git fzf starship
 ```
 
+### Available Modules
 
-If you have any problems with fish not recognizing commands/wrong path variable check https://stackoverflow.com/questions/66724016/my-fish-is-blind-fish-does-not-recognise-any-commands-after-setting-it-as-defa
-
-#### Update
-
-To update, you just need to `git pull` and run the bootstrap script again:
-
-```console
-$ cd ~/.dotfiles
-$ git pull origin master
-$ ./script/bootstrap.fish
+```bash
+./install.sh --help
 ```
 
-## Revert
+## Structure
 
-Reverting is not totally automated, but it pretty much consists in removing
-the fish config and dotfiles folder, as well as moving back some config files.
-
-**Remove the folders:**
-
-```console
-$ rm -rf ~/.dotfiles ~/.config/fish
+```
+dotfiles/
+├── install.sh              # Master install script
+├── lib/                    # Shared utilities
+│   ├── utils.sh           # Common functions
+│   └── brew.sh            # Homebrew management
+├── configs/               # Configuration files
+│   ├── aerospace/
+│   ├── bat/
+│   ├── git/
+│   ├── htop/
+│   ├── sketchybar/
+│   ├── starship/
+│   └── terminal/
+├── scripts/               # Utility scripts
+│   ├── system/           # System utility functions
+│   └── macos/            # macOS-specific scripts
+└── modules/              # Individual install modules
+    ├── aerospace.sh
+    ├── bat.sh
+    ├── exa.sh
+    ├── fd.sh
+    ├── fzf.sh
+    ├── git.sh
+    ├── htop.sh
+    ├── macos.sh
+    ├── sketchybar.sh
+    ├── starship.sh
+    ├── system.sh
+    └── terminal.sh
 ```
 
-**Some config files were changed, you can find them using `fd`:**
+## Features
 
-```console
-$ fd -e backup -e local -H -E Library -d 3 .
+### Idempotent Installation
+All install scripts are idempotent - safe to run multiple times without side effects.
+
+### Backup Protection
+Existing configurations are automatically backed up before installation.
+
+### Shell Integration
+Configurations are automatically sourced in zsh (with bash compatibility).
+
+### macOS Optimized
+Comprehensive macOS system defaults for better performance and usability.
+
+## Key Shortcuts
+
+### AeroSpace (Window Manager)
+- `Alt+semicolon` - Service mode
+- `Alt+h/j/k/l` - Focus windows (vi-style)
+- `Alt+Shift+h/j/k/l` - Move windows
+- `Alt+1-0` - Switch workspaces
+- `Alt+Shift+1-0` - Move window to workspace
+- `Alt+f` - Fullscreen
+- `Alt+s/v` - Split horizontal/vertical
+
+### Git Functions
+- `cdr` - cd to git repository root
+- `gpr` - Push and create pull request
+- `gwf` - Switch branch with fzf
+- `glog` - Pretty git log with graph
+
+### System Functions
+- `e [file/dir]` - Open in editor
+- `mkc <dir>` - Create and cd to directory
+- `myip` - Show external IP
+- `ports <command>` - Port management utility
+- `loadenv [file]` - Load environment from .env file
+
+### Brew Functions
+- `brew bump` - Update and upgrade all packages
+- `brew cleanup-all` - Comprehensive cleanup
+- `brewup` - Alias for brew bump
+- `brewclean` - Alias for cleanup-all
+
+## Requirements
+
+- macOS (tested on macOS 14+)
+- zsh (default shell on macOS)
+- Homebrew (will be installed if missing)
+
+## Customization
+
+Each module is self-contained and can be customized independently. Configuration files are in the `configs/` directory and are symlinked to their proper locations.
+
+## Uninstallation
+
+To uninstall, remove the symlinked configurations:
+
+```bash
+# Remove symlinks (they point to files in this repo)
+rm ~/.gitconfig.local ~/.git_functions ~/.fzf_config
+rm -rf ~/.config/aerospace ~/.config/bat ~/.config/htop
+rm -rf ~/.config/sketchybar ~/.config/starship
+
+# Remove shell integrations
+# Edit your ~/.zshrc to remove the sourced config files
 ```
-
-And then manually inspect/revert them.
-
-## macOS defaults
-
-Install default values for quality of life improvements for settings by running:
-
-```console
-~/.dotfiles/macos/set-defaults.sh
-```
-
-And logging out and in again or restart.
-
-Python env setup:
-
-Install https://github.com/conda-forge/miniforge and set it on fish with `conda init fish`
-
-## Themes and fonts being used
-
-Theme is **[Dracula](https://draculatheme.com)** and font is **Inconsolata**
-Nerd Font.
-
-<!-- ## Screenshots
-
-![screenshot 1][scrn1]
-
-![screenshot 2][scrn2]
-
-[scrn1]: /docs/screenshot1.png
-[scrn2]: /docs/screenshot2.png -->
