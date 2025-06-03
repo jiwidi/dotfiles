@@ -9,12 +9,12 @@ install_exa() {
     info "Installing exa..."
     
     # Install exa via Homebrew
-    info "DEBUG: Installing exa via brew..."
+    debug "Installing exa via brew..."
     brew_install "exa"
-    info "DEBUG: exa installation completed"
+    debug "exa installation completed"
     
     # Create aliases for exa
-    info "DEBUG: Setting up exa aliases..."
+    debug "Setting up exa aliases..."
     local exa_config='
 # exa aliases - better ls
 if command -v exa > /dev/null 2>&1; then
@@ -29,17 +29,17 @@ fi
 '
     
     # Add exa configuration to shell config
-    info "DEBUG: Adding exa config to shell..."
+    debug "Adding exa config to shell..."
     local config_file="${HOME}/.exa_config"
     echo "$exa_config" > "$config_file"
-    info "DEBUG: Config file written"
+    debug "Config file written"
     
     # Source in shell configuration
-    info "DEBUG: Sourcing in shell configuration..."
+    debug "Sourcing in shell configuration..."
     source_in_shell "[ -f ~/.exa_config ] && source ~/.exa_config"
-    info "DEBUG: Shell configuration completed"
+    debug "Shell configuration completed"
     
-    info "DEBUG: exa module completing..."
+    debug "exa module completing..."
     success "exa configuration complete"
-    info "DEBUG: exa module completed successfully"
+    debug "exa module completed successfully"
 }

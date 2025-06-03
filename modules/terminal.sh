@@ -9,37 +9,37 @@ install_terminal() {
     info "Installing Terminal configuration..."
     
     # Check if we're on macOS
-    info "DEBUG: Checking if running on macOS..."
+    debug "Checking if running on macOS..."
     if ! is_macos; then
         warning "Terminal.app configuration is only available on macOS"
         return 0
     fi
-    info "DEBUG: macOS check passed"
+    debug "macOS check passed"
     
     # Install terminal profile
-    info "DEBUG: Setting up terminal profile..."
+    debug "Setting up terminal profile..."
     setup_terminal_profile
-    info "DEBUG: Terminal profile setup completed"
+    debug "Terminal profile setup completed"
     
-    info "DEBUG: terminal module completing..."
+    debug "terminal module completing..."
     success "Terminal configuration complete"
-    info "DEBUG: terminal module completed successfully"
+    debug "terminal module completed successfully"
 }
 
 setup_terminal_profile() {
     info "Setting up Terminal.app profile..."
     
-    info "DEBUG: Setting up terminal profile..."
+    debug "Setting up terminal profile..."
     local profile_source="${DOTFILES_DIR}/configs/terminal/jiwidi.terminal"
     local profile_name="jiwidi"
-    info "DEBUG: Profile source: $profile_source"
-    info "DEBUG: DOTFILES_DIR: $DOTFILES_DIR"
+    debug "Profile source: $profile_source"
+    debug "DOTFILES_DIR: $DOTFILES_DIR"
     
     if [[ ! -f "$profile_source" ]]; then
         error "Terminal profile not found at $profile_source"
         return 1
     fi
-    info "DEBUG: Profile file found"
+    debug "Profile file found"
     
     # Import the terminal profile
     info "Importing Terminal profile: $profile_name"

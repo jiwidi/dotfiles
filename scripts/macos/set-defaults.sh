@@ -122,8 +122,8 @@ sudo chflags nohidden /Volumes
 
 echo ""
 echo "🏠 Dock & Spaces"
-info "Setting Dock icon size to 45 pixels"
-defaults write com.apple.dock tilesize -int 45
+info "Setting Dock icon size to 60 pixels"
+defaults write com.apple.dock tilesize -int 60
 
 info "Enabling auto-hide Dock"
 defaults write com.apple.dock autohide -bool true

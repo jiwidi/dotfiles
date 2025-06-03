@@ -42,47 +42,47 @@ setup_sketchybar_config() {
     info "Setting up SketchyBar configuration..."
     
     # Create SketchyBar config directory
-    info "DEBUG: Creating sketchybar config directories..."
+    debug "Creating sketchybar config directories..."
     local sketchybar_config_dir="${HOME}/.config/sketchybar"
-    info "DEBUG: Config dir: $sketchybar_config_dir"
+    debug "Config dir: $sketchybar_config_dir"
     
     # Create main directory
     if [[ ! -d "$sketchybar_config_dir" ]]; then
-        info "DEBUG: Creating main directory..."
+        debug "Creating main directory..."
         mkdir -p "$sketchybar_config_dir" 2>/dev/null || {
             error "Failed to create directory: $sketchybar_config_dir"
             return 1
         }
-        info "DEBUG: Main directory created"
+        debug "Main directory created"
     else
-        info "DEBUG: Main directory already exists"
+        debug "Main directory already exists"
     fi
     
     # Create plugins directory
     if [[ ! -d "$sketchybar_config_dir/plugins" ]]; then
-        info "DEBUG: Creating plugins directory..."
+        debug "Creating plugins directory..."
         mkdir -p "$sketchybar_config_dir/plugins" 2>/dev/null || {
             error "Failed to create directory: $sketchybar_config_dir/plugins"
             return 1
         }
-        info "DEBUG: Plugins directory created"
+        debug "Plugins directory created"
     else
-        info "DEBUG: Plugins directory already exists"
+        debug "Plugins directory already exists"
     fi
-    info "DEBUG: Directories setup completed"
+    debug "Directories setup completed"
     
     # Copy configuration files
-    info "DEBUG: Setting up config files..."
+    debug "Setting up config files..."
     local config_source_dir="${DOTFILES_DIR}/configs/sketchybar"
-    info "DEBUG: Config source dir: $config_source_dir"
+    debug "Config source dir: $config_source_dir"
     
     # Main config
-    info "DEBUG: Linking main config..."
+    debug "Linking main config..."
     create_symlink "$config_source_dir/sketchybarrc" "$sketchybar_config_dir/sketchybarrc"
-    info "DEBUG: Main config linked"
+    debug "Main config linked"
     
     # Plugins
-    info "DEBUG: Setting up plugins..."
+    debug "Setting up plugins..."
     local plugins=(
         "aerospace.sh"
         "front_app.sh"
@@ -96,20 +96,20 @@ setup_sketchybar_config() {
     )
     
     for plugin in "${plugins[@]}"; do
-        info "DEBUG: Linking plugin: $plugin"
+        debug "Linking plugin: $plugin"
         create_symlink "$config_source_dir/plugins/$plugin" "$sketchybar_config_dir/plugins/$plugin"
         chmod +x "$sketchybar_config_dir/plugins/$plugin" 2>/dev/null || true
-        info "DEBUG: Plugin $plugin linked and made executable"
+        debug "Plugin $plugin linked and made executable"
     done
     
     # Make main config executable
-    info "DEBUG: Making main config executable..."
+    debug "Making main config executable..."
     chmod +x "$sketchybar_config_dir/sketchybarrc" 2>/dev/null || true
-    info "DEBUG: Main config made executable"
+    debug "Main config made executable"
     
-    info "DEBUG: sketchybar config setup completing..."
+    debug "sketchybar config setup completing..."
     success "SketchyBar configuration files linked"
-    info "DEBUG: sketchybar config setup completed"
+    debug "sketchybar config setup completed"
 }
 
 start_sketchybar() {

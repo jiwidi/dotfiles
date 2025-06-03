@@ -16,7 +16,7 @@ export DOTFILES_DIR
 # Source utilities
 source "${DOTFILES_DIR}/lib/utils.sh"
 
-# Available modules
+# Available modules with descriptions
 readonly MODULES=(
     "macos"
     "git"
@@ -31,6 +31,26 @@ readonly MODULES=(
     "system"
     "terminal"
 )
+
+# Module descriptions
+declare -A MODULE_DESCRIPTIONS=(
+    ["macos"]="macOS system defaults and tools"
+    ["git"]="Git configuration and aliases"
+    ["aerospace"]="AeroSpace window manager"
+    ["bat"]="Better cat with syntax highlighting"
+    ["exa"]="Better ls with colors and icons"
+    ["fd"]="Fast find alternative"
+    ["fzf"]="Fuzzy finder"
+    ["htop"]="System monitor"
+    ["sketchybar"]="Status bar for macOS"
+    ["starship"]="Cross-shell prompt"
+    ["system"]="System utilities and shell setup"
+    ["terminal"]="Terminal.app configuration"
+)
+
+# Global flags
+AUTO_ACCEPT=false
+DEBUG_MODE=false
 
 main() {
     print_header "🚀 Dotfiles Installation"
@@ -49,9 +69,9 @@ main() {
     
     # Install modules
     if [[ $# -eq 0 ]]; then
-        # Install all modules
+        # Install all modules with prompts
         for module in "${MODULES[@]}"; do
-            install_module "$module"
+            install_module_with_prompt "$module"
         done
     else
         # Install specific modules
@@ -117,6 +137,24 @@ backup_existing_configs() {
     fi
 }
 
+install_module_with_prompt() {
+    local module="$1"
+    local description="${MODULE_DESCRIPTIONS[$module]}"
+    
+    # Auto-accept if -y flag is set
+    if [[ "$AUTO_ACCEPT" == "true" ]]; then
+        install_module "$module"
+        return
+    fi
+    
+    # Ask user for confirmation
+    if confirm "Install $module ($description)?"; then
+        install_module "$module"
+    else
+        info "Skipping $module installation"
+    fi
+}
+
 install_module() {
     local module="$1"
     local module_script="${DOTFILES_DIR}/modules/${module}.sh"
@@ -140,15 +178,47 @@ install_module() {
     fi
 }
 
-# Show usage if --help is passed
-if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
-    echo "Usage: $0 [module1] [module2] ..."
-    echo ""
-    echo "Available modules:"
-    printf "  %s\n" "${MODULES[@]}"
-    echo ""
-    echo "If no modules are specified, all modules will be installed."
-    exit 0
-fi
+# Parse arguments
+INSTALL_MODULES=()
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -y|--yes)
+            AUTO_ACCEPT=true
+            shift
+            ;;
+        -d|--debug)
+            DEBUG_MODE=true
+            export DEBUG_MODE
+            shift
+            ;;
+        -h|--help)
+            echo "Usage: $0 [OPTIONS] [module1] [module2] ..."
+            echo ""
+            echo "Options:"
+            echo "  -y, --yes      Auto-accept all prompts"
+            echo "  -d, --debug    Enable debug output"
+            echo "  -h, --help     Show this help message"
+            echo ""
+            echo "Available modules:"
+            for module in "${MODULES[@]}"; do
+                printf "  %-12s %s\n" "$module" "${MODULE_DESCRIPTIONS[$module]}"
+            done
+            echo ""
+            echo "If no modules are specified, all modules will be installed with prompts."
+            echo "Use -y flag to auto-install all modules without prompts."
+            echo "Use -d flag to see detailed debug information."
+            exit 0
+            ;;
+        -*)
+            error "Unknown option: $1"
+            echo "Use --help for usage information."
+            exit 1
+            ;;
+        *)
+            INSTALL_MODULES+=("$1")
+            shift
+            ;;
+    esac
+done
 
-main "$@"
+main "${INSTALL_MODULES[@]}"

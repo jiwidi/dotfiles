@@ -49,7 +49,7 @@ setup_system_functions() {
     
     # Link system functions
     local functions_source="${DOTFILES_DIR}/scripts/system/system_functions.sh"
-    info "DEBUG: Functions source: $functions_source"
+    debug "Functions source: $functions_source"
     create_symlink "$functions_source" "${HOME}/.system_functions"
     
     # Create system configuration
@@ -142,22 +142,22 @@ setup_shell_config() {
     info "Setting up shell configurations..."
     
     # Ensure directories exist
-    info "DEBUG: Creating projects directory..."
+    debug "Creating projects directory..."
     local projects_dir="${HOME}/projects/github"
-    info "DEBUG: Projects dir: $projects_dir"
+    debug "Projects dir: $projects_dir"
     if [[ ! -d "$projects_dir" ]]; then
-        info "DEBUG: Directory doesn't exist, creating..."
+        debug "Directory doesn't exist, creating..."
         mkdir -p "$projects_dir" 2>/dev/null || {
             warning "Could not create directory: $projects_dir"
         }
-        info "DEBUG: Directory created successfully"
+        debug "Directory created successfully"
     else
-        info "DEBUG: Directory already exists"
+        debug "Directory already exists"
     fi
-    info "DEBUG: Projects directory setup completed"
+    debug "Projects directory setup completed"
     
     # Create .inputrc for better readline behavior
-    info "DEBUG: Creating .inputrc file..."
+    debug "Creating .inputrc file..."
     cat > "${HOME}/.inputrc" << 'EOF'
 # Better readline behavior
 set completion-ignore-case on
@@ -176,25 +176,25 @@ set completion-query-items 200
 "\e[1;5C": forward-word
 "\e[1;5D": backward-word
 EOF
-    info "DEBUG: .inputrc file created"
+    debug ".inputrc file created"
     
     # Create .hushlogin to suppress login message
-    info "DEBUG: Creating .hushlogin file..."
+    debug "Creating .hushlogin file..."
     touch "${HOME}/.hushlogin"
-    info "DEBUG: .hushlogin file created"
+    debug ".hushlogin file created"
     
-    info "DEBUG: shell config setup completing..."
+    debug "shell config setup completing..."
     success "Shell configurations set up"
-    info "DEBUG: shell config setup completed"
+    debug "shell config setup completed"
 }
 
 setup_default_shell() {
     info "Setting up default shell..."
     
     # Check current shell
-    info "DEBUG: Checking current shell..."
+    debug "Checking current shell..."
     local current_shell="$(dscl . -read /Users/$(whoami) UserShell | cut -d' ' -f2)"
-    info "DEBUG: Current shell: $current_shell"
+    debug "Current shell: $current_shell"
     
     # Check if zsh is available
     local zsh_path="/bin/zsh"
@@ -210,7 +210,7 @@ setup_default_shell() {
             fi
         fi
     fi
-    info "DEBUG: Found zsh at: $zsh_path"
+    debug "Found zsh at: $zsh_path"
     
     # Check if zsh is already the default
     if [[ "$current_shell" == "$zsh_path" ]]; then
@@ -219,13 +219,13 @@ setup_default_shell() {
     fi
     
     # Ensure zsh is in /etc/shells
-    info "DEBUG: Checking if zsh is in /etc/shells..."
+    debug "Checking if zsh is in /etc/shells..."
     if ! grep -q "^$zsh_path$" /etc/shells 2>/dev/null; then
         info "Adding zsh to /etc/shells..."
         echo "$zsh_path" | sudo tee -a /etc/shells >/dev/null
-        info "DEBUG: zsh added to /etc/shells"
+        debug "zsh added to /etc/shells"
     else
-        info "DEBUG: zsh already in /etc/shells"
+        debug "zsh already in /etc/shells"
     fi
     
     # Change default shell
@@ -241,5 +241,5 @@ setup_default_shell() {
         info "Keeping current shell: $current_shell"
     fi
     
-    info "DEBUG: default shell setup completed"
+    debug "default shell setup completed"
 }

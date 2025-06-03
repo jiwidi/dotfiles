@@ -30,6 +30,12 @@ error() {
     printf "${RED}✗${NC} %s\n" "$*" >&2
 }
 
+debug() {
+    if [[ "${DEBUG_MODE:-false}" == "true" ]]; then
+        printf "${CYAN}🔍${NC} %s\n" "$*"
+    fi
+}
+
 print_header() {
     printf "\n${PURPLE}%s${NC}\n" "$*"
     printf "${PURPLE}%s${NC}\n" "$(printf '=%.0s' $(seq 1 ${#1}))"
