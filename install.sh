@@ -30,6 +30,7 @@ readonly MODULES=(
     "starship"
     "system"
     "terminal"
+    "zsh-enhancements"
 )
 
 # Module descriptions
@@ -46,6 +47,7 @@ declare -A MODULE_DESCRIPTIONS=(
     ["starship"]="Cross-shell prompt"
     ["system"]="System utilities and shell setup"
     ["terminal"]="Terminal.app configuration"
+    ["zsh-enhancements"]="ZSH syntax highlighting and autosuggestions"
 )
 
 # Global flags
