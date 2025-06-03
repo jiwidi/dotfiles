@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+
+# Optimized dotfiles zshrc
+# Sources all configurations directly from dotfiles repository
+
+# Core environment setup
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
+# Load dotfiles directory path
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/projects/github/dotfiles}"
+
+# Load local environment if it exists
+[ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
+
+# Load NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Load PNPM
+export PNPM_HOME="/Users/jiwidi/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# Source shell configurations directly from dotfiles
+[ -f "$DOTFILES_DIR/configs/shell/system.zsh" ] && source "$DOTFILES_DIR/configs/shell/system.zsh"
+[ -f "$DOTFILES_DIR/configs/shell/git.zsh" ] && source "$DOTFILES_DIR/configs/shell/git.zsh"
+[ -f "$DOTFILES_DIR/configs/shell/tools.zsh" ] && source "$DOTFILES_DIR/configs/shell/tools.zsh"
+[ -f "$DOTFILES_DIR/configs/shell/macos.zsh" ] && source "$DOTFILES_DIR/configs/shell/macos.zsh"
+
+# Load fzf shell integration (installed via brew)
+if [[ -f "/opt/homebrew/opt/fzf/shell/key-bindings.zsh" ]]; then
+    source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+    source "/opt/homebrew/opt/fzf/shell/completion.zsh"
+elif [[ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]]; then
+    source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+    source "/usr/local/opt/fzf/shell/completion.zsh"
+fi
+
+# Initialize starship prompt (must be at the end)
+if command -v starship > /dev/null 2>&1; then
+    eval "$(starship init zsh 2>/dev/null || true)"
+fi

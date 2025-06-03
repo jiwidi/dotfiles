@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(zsh:*)",
+      "Bash(ls:*)",
+      "Bash(grep:*)",
+      "Bash(ln:*)",
+      "Bash(chmod:*)",
+      "Bash(readlink:*)",
+      "Bash(source:*)",
+      "Bash(cat:*)",
+      "Bash(./install_optimized.sh:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(./install.sh:*)"
+    ],
+    "deny": []
+  }
+}

@@ -132,6 +132,31 @@ source_in_shell() {
     add_to_file "$source_line" "$shell_config"
 }
 
+# Setup optimized shell configuration
+setup_optimized_shell() {
+    info "Setting up optimized shell configuration..."
+    
+    # Create optimized .zshrc that sources directly from dotfiles
+    local zshrc_source="$DOTFILES_DIR/configs/shell/zshrc"
+    
+    if [[ ! -f "$zshrc_source" ]]; then
+        error "Optimized zshrc not found at $zshrc_source"
+        return 1
+    fi
+    
+    # Backup existing .zshrc if it exists and is not our optimized version
+    if [[ -f "$HOME/.zshrc" ]] && ! grep -q "Optimized dotfiles zshrc" "$HOME/.zshrc"; then
+        local backup="$HOME/.zshrc.backup.$(date +%Y%m%d_%H%M%S)"
+        warning "Backing up existing .zshrc to $backup"
+        mv "$HOME/.zshrc" "$backup"
+    fi
+    
+    # Create symlink to optimized zshrc
+    create_symlink "$zshrc_source" "$HOME/.zshrc"
+    
+    success "Optimized shell configuration linked"
+}
+
 # Check if running on macOS
 is_macos() {
     [[ "$(uname)" == "Darwin" ]]

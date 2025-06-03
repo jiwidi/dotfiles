@@ -86,7 +86,20 @@ main() {
     fi
     
     print_success "✅ Dotfiles installation complete!"
-    info "Please restart your terminal or run 'exec \$SHELL' to apply changes"
+    info "🔄 Run 'exec zsh' to apply all changes"
+    
+    # Show benefits
+    cat << 'EOF'
+
+🎉 Your dotfiles are now optimized:
+• ⚡ Faster shell startup (direct sourcing from dotfiles)
+• 🧹 Cleaner home directory (minimal config files)  
+• 🔧 Easier maintenance (all configs in dotfiles repo)
+• 📁 Better organization (grouped by functionality)
+
+Your ~/.zshrc now sources directly from your dotfiles repository!
+
+EOF
 }
 
 check_requirements() {
@@ -118,6 +131,18 @@ backup_existing_configs() {
         ".bashrc"
         ".bash_profile"
         ".zshrc"
+        # Backup old dotfiles configs if they exist
+        ".system_config"
+        ".git_config"
+        ".exa_config"
+        ".bat_config"
+        ".fzf_config"
+        ".fd_config"
+        ".starship_init"
+        ".system_functions"
+        ".git_functions"
+        ".macos_config"
+        ".brew_wrapper"
     )
     
     mkdir -p "$backup_dir"
@@ -193,6 +218,9 @@ while [[ $# -gt 0 ]]; do
             ;;
         -h|--help)
             echo "Usage: $0 [OPTIONS] [module1] [module2] ..."
+            echo ""
+            echo "🎯 Optimized Dotfiles Installation"
+            echo "Clean, fast shell setup with minimal home directory clutter!"
             echo ""
             echo "Options:"
             echo "  -y, --yes      Auto-accept all prompts"

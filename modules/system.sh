@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# System utility functions and configurations
+# Optimized system utility functions and configurations
 
 source "$(dirname "${(%):-%N}")/../lib/utils.sh"
 source "$(dirname "${(%):-%N}")/../lib/brew.sh"
@@ -11,8 +11,8 @@ install_system() {
     # Install useful system tools
     install_system_tools
     
-    # Set up system functions
-    setup_system_functions
+    # Set up optimized shell configuration
+    setup_optimized_shell
     
     # Set up shell configurations
     setup_shell_config
@@ -42,100 +42,6 @@ install_system_tools() {
     for tool in "${tools[@]}"; do
         brew_install "$tool"
     done
-}
-
-setup_system_functions() {
-    info "Setting up system functions..."
-    
-    # Link system functions
-    local functions_source="${DOTFILES_DIR}/scripts/system/system_functions.sh"
-    debug "Functions source: $functions_source"
-    create_symlink "$functions_source" "${HOME}/.system_functions"
-    
-    # Create system configuration
-    local system_config='
-# System utility functions
-if [ -f ~/.system_functions ]; then
-    source ~/.system_functions
-fi
-
-# Useful environment variables
-export EDITOR="${EDITOR:-code}"
-export VISUAL="$EDITOR"
-export PAGER="${PAGER:-less}"
-
-# History configuration (zsh optimized)
-export HISTSIZE=10000
-export SAVEHIST=10000
-export HISTFILE="$HOME/.zsh_history"
-setopt HIST_VERIFY
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt SHARE_HISTORY
-setopt EXTENDED_HISTORY
-
-# Less configuration
-export LESS="-R -F -X"
-
-# zsh-specific options
-setopt AUTO_CD
-setopt CORRECT
-setopt NO_CASE_GLOB
-setopt NUMERIC_GLOB_SORT
-setopt EXTENDED_GLOB
-
-# Colored output for common commands (ls handled by exa module)
-alias grep="grep --color=auto"
-alias fgrep="fgrep --color=auto"
-alias egrep="egrep --color=auto"
-
-# Useful aliases
-alias h="history"
-alias j="jobs"
-alias c="clear"
-alias q="exit"
-
-# Directory navigation
-alias md="mkdir -p"
-alias rd="rmdir"
-
-# Process management
-alias psg="ps aux | grep"
-alias topcpu="top -o cpu"
-alias topmem="top -o rsize"
-
-# Network utilities
-alias ping="ping -c 5"
-alias ports="ports"
-
-# Development shortcuts
-alias jsonpp="jq ."
-alias serve="python3 -m http.server 8000"
-
-# Quick file operations
-alias cp="cp -v"
-alias mv="mv -v"
-alias mkdir="mkdir -pv"
-
-# Search shortcuts
-if command -v rg > /dev/null 2>&1; then
-    alias search="rg"
-elif command -v ag > /dev/null 2>&1; then
-    alias search="ag"
-else
-    alias search="grep -r"
-fi
-'
-    
-    # Add system configuration to shell config
-    local config_file="${HOME}/.system_config"
-    echo "$system_config" > "$config_file"
-    
-    # Source in shell configuration
-    source_in_shell "[ -f ~/.system_config ] && source ~/.system_config"
-    
-    success "System functions configured"
 }
 
 setup_shell_config() {
@@ -233,7 +139,7 @@ setup_default_shell() {
         info "Changing default shell to zsh..."
         if chsh -s "$zsh_path"; then
             success "Default shell changed to zsh"
-            info "Please restart your terminal or log out/in for changes to take effect"
+            info "Please restart your terminal or run 'exec \$SHELL' to apply changes"
         else
             warning "Failed to change default shell. You may need to run: chsh -s $zsh_path"
         fi
