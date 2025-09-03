@@ -7,13 +7,13 @@ source "$(dirname "${(%):-%N}")/../lib/brew.sh"
 
 install_aerospace() {
     info "Installing AeroSpace..."
-    
+
     # Install AeroSpace via Homebrew
     brew_install "nikitabobko/tap/aerospace" true
-    
+
     # Install borders (window borders for tiling WM)
     brew_install "felixkratz/formulae/borders"
-    
+
     # Create AeroSpace config directory
     info "Setting up AeroSpace configuration..."
     debug "Creating config directory..."
@@ -31,7 +31,7 @@ install_aerospace() {
         debug "Directory already exists"
     fi
     debug "Config directory setup completed"
-    
+
     # Copy configuration file
     local config_source="${DOTFILES_DIR}/configs/aerospace/aerospace.toml"
     debug "Config source: $config_source"
@@ -44,7 +44,7 @@ install_aerospace() {
     debug "Source file exists, creating symlink..."
     create_symlink "$config_source" "${aerospace_config_dir}/aerospace.toml"
     debug "Symlink created successfully"
-    
+
     # Start borders service (optional)
     debug "Starting borders service check..."
     info "Checking borders service..."
@@ -57,7 +57,7 @@ install_aerospace() {
         timeout 5 brew services start borders >/dev/null 2>&1 && info "Borders service started" || warning "Could not start borders service (optional)"
     fi
     debug "Borders service check completed"
-    
+
     # Start AeroSpace (optional - it will auto-start on login due to config)
     debug "Starting AeroSpace check..."
     info "Checking AeroSpace..."
@@ -67,7 +67,7 @@ install_aerospace() {
         info "AeroSpace will start automatically - skipping manual launch"
     fi
     debug "AeroSpace check completed"
-    
+
     debug "Displaying shortcuts..."
     info "AeroSpace shortcuts:"
     info "  Alt+semicolon: Service mode"
@@ -78,7 +78,7 @@ install_aerospace() {
     info "  Alt+f: Fullscreen"
     info "  Alt+s/v: Split horizontal/vertical"
     debug "Shortcuts displayed"
-    
+
     debug "AeroSpace module completing..."
     success "AeroSpace configuration complete"
     debug "AeroSpace module completed successfully"

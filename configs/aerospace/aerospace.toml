@@ -30,11 +30,11 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Gaps between windows (inner-*) and between monitor edges (outer-*)
 [gaps]
 inner.horizontal = 10
-inner.vertical =   10
-outer.left =       10
-outer.bottom =     10
-outer.top =        10
-outer.right =      10
+inner.vertical = 10
+outer.bottom = 3
+outer.left = 5
+outer.right = 5
+outer.top = 5
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide.html#binding-modes
@@ -68,13 +68,18 @@ alt-shift-k = 'move up'
 alt-shift-l = 'move right'
 
 # Split windows
-alt-s = 'split horizontal'
-alt-v = 'split vertical'
+alt-ctrl-h = ['join-with left', 'mode main']
+alt-ctrl-j = ['join-with down', 'mode main']
+alt-ctrl-k = ['join-with up', 'mode main']
+alt-ctrl-l = ['join-with right', 'mode main']
 
+# Move screen
+alt-shift-tab = 'move-workspace-to-monitor prev'
 # Fullscreen
 alt-f = 'fullscreen'
 
 # Workspaces
+alt-0 = 'workspace 10'
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
@@ -84,9 +89,9 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
-alt-0 = 'workspace 10'
 
 # Move window to workspace
+alt-shift-0 = 'move-node-to-workspace 10'
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3'
@@ -96,18 +101,17 @@ alt-shift-6 = 'move-node-to-workspace 6'
 alt-shift-7 = 'move-node-to-workspace 7'
 alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
-alt-shift-0 = 'move-node-to-workspace 10'
 
 # Window resizing
-alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
+alt-shift-minus = 'resize smart -50'
 
 # Service mode declarations
 [mode.service.binding]
-esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
+esc = ['reload-config', 'mode main']
+f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
 
 # Assign specific apps to workspaces
 [[on-window-detected]]
