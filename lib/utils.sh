@@ -54,20 +54,41 @@ has_command() {
 brew_install() {
     local package="$1"
     local cask="${2:-false}"
-    
+
+    # Check if brew is available
+    if ! has_command brew; then
+        error "Homebrew is not installed. Cannot install $package"
+        return 1
+    fi
+
     if [[ "$cask" == "true" ]]; then
         if ! brew list --cask "$package" &> /dev/null; then
             info "Installing $package (cask)..."
-            brew install --cask "$package"
+            if brew install --cask "$package" 2>&1; then
+                success "$package (cask) installed successfully"
+                return 0
+            else
+                error "Failed to install $package (cask)"
+                return 1
+            fi
         else
             info "$package (cask) already installed"
+            return 0
         fi
     else
         if ! brew list "$package" &> /dev/null; then
             info "Installing $package..."
-            brew install "$package"
+            if brew install "$package" 2>&1; then
+                success "$package installed successfully"
+                return 0
+            else
+                error "Failed to install $package"
+                warning "You may need to install this manually later"
+                return 1
+            fi
         else
             info "$package already installed"
+            return 0
         fi
     fi
 }
@@ -76,29 +97,55 @@ brew_install() {
 create_symlink() {
     local source="$1"
     local target="$2"
-    
+
+    # Verify source exists
+    if [[ ! -e "$source" ]]; then
+        error "Source does not exist: $source"
+        return 1
+    fi
+
     # Create target directory if it doesn't exist
-    mkdir -p "$(dirname "$target")"
-    
+    if ! mkdir -p "$(dirname "$target")" 2>/dev/null; then
+        error "Failed to create directory for: $target"
+        return 1
+    fi
+
     # If target exists and is not a symlink, back it up
     if [[ -e "$target" && ! -L "$target" ]]; then
         local backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
         warning "Backing up existing $target to $backup"
-        mv "$target" "$backup"
+        if ! mv "$target" "$backup" 2>/dev/null; then
+            error "Failed to backup $target"
+            return 1
+        fi
     fi
-    
+
     # Remove existing symlink
     [[ -L "$target" ]] && rm "$target"
-    
+
     # Create symlink
-    ln -sf "$source" "$target"
-    success "Linked $source → $target"
+    if ln -sf "$source" "$target" 2>/dev/null; then
+        success "Linked $source → $target"
+        return 0
+    else
+        error "Failed to create symlink: $source → $target"
+        return 1
+    fi
 }
 
 # Create directory if it doesn't exist
 ensure_dir() {
     local dir="$1"
-    [[ ! -d "$dir" ]] && mkdir -p "$dir"
+    if [[ ! -d "$dir" ]]; then
+        if mkdir -p "$dir" 2>/dev/null; then
+            debug "Created directory: $dir"
+            return 0
+        else
+            error "Failed to create directory: $dir"
+            return 1
+        fi
+    fi
+    return 0
 }
 
 # Add line to file if it doesn't exist
@@ -194,12 +241,57 @@ run_cmd() {
 download_if_missing() {
     local url="$1"
     local target="$2"
-    
+
     if [[ ! -f "$target" ]]; then
         info "Downloading $url → $target"
-        curl -fsSL "$url" -o "$target"
-        success "Downloaded $target"
+        # Ensure target directory exists
+        ensure_dir "$(dirname "$target")" || return 1
+
+        if curl -fsSL "$url" -o "$target" 2>/dev/null; then
+            success "Downloaded $target"
+            return 0
+        else
+            error "Failed to download from $url"
+            return 1
+        fi
     else
         info "$target already exists"
+        return 0
     fi
+}
+
+# Safe command execution with error handling
+safe_exec() {
+    local cmd="$*"
+    debug "Executing: $cmd"
+
+    if eval "$cmd" 2>&1; then
+        debug "Command succeeded: $cmd"
+        return 0
+    else
+        local exit_code=$?
+        error "Command failed (exit $exit_code): $cmd"
+        return $exit_code
+    fi
+}
+
+# Retry a command up to N times
+retry_cmd() {
+    local retries="${1:-3}"
+    shift
+    local cmd="$*"
+    local attempt=1
+
+    while [[ $attempt -le $retries ]]; do
+        info "Attempt $attempt/$retries: $cmd"
+        if eval "$cmd" 2>&1; then
+            success "Command succeeded on attempt $attempt"
+            return 0
+        fi
+        attempt=$((attempt + 1))
+        [[ $attempt -le $retries ]] && sleep 2
+    done
+
+    error "Command failed after $retries attempts: $cmd"
+    return 1
 }

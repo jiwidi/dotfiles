@@ -121,7 +121,7 @@ info "Showing the /Volumes folder"
 sudo chflags nohidden /Volumes
 
 echo ""
-echo "🏠 Dock & Spaces"
+echo "🏠 Dock & Menu Bar"
 info "Setting Dock icon size to 60 pixels"
 defaults write com.apple.dock tilesize -int 60
 
@@ -141,6 +141,11 @@ defaults write com.apple.dock "expose-group-by-app" -bool true
 
 info "Disabling automatic Space rearrangement"
 defaults write com.apple.dock mru-spaces -bool false
+
+# Note: Menu bar auto-hide must be set manually on macOS 15+ (Sequoia)
+# Go to: System Settings → Control Center → Automatically hide and show the menu bar: Always
+warning "Menu bar auto-hide must be set manually in System Settings on macOS 15+"
+warning "Go to: System Settings → Control Center → 'Automatically hide and show the menu bar'"
 
 echo ""
 echo "📷 Screenshots"

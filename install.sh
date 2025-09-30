@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-set -e
+# Note: Not using 'set -e' to allow script to continue on errors
+# Individual modules can fail without stopping the entire installation
 
 # Colors for output
 readonly RED='\033[0;31m'
@@ -53,6 +54,13 @@ declare -A MODULE_DESCRIPTIONS=(
 # Global flags
 AUTO_ACCEPT=false
 DEBUG_MODE=false
+CONTINUE_ON_ERROR=true
+
+# Track installation results
+declare -A MODULE_RESULTS
+FAILED_MODULES=()
+SUCCESSFUL_MODULES=()
+SKIPPED_MODULES=()
 
 main() {
     print_header "🚀 Dotfiles Installation"
@@ -86,16 +94,19 @@ main() {
             fi
         done
     fi
-    
+
+    # Show installation summary
+    show_installation_summary
+
     print_success "✅ Dotfiles installation complete!"
     info "🔄 Run 'exec zsh' to apply all changes"
-    
+
     # Show benefits
     cat << 'EOF'
 
 🎉 Your dotfiles are now optimized:
 • ⚡ Faster shell startup (direct sourcing from dotfiles)
-• 🧹 Cleaner home directory (minimal config files)  
+• 🧹 Cleaner home directory (minimal config files)
 • 🔧 Easier maintenance (all configs in dotfiles repo)
 • 📁 Better organization (grouped by functionality)
 
@@ -104,15 +115,65 @@ Your ~/.zshrc now sources directly from your dotfiles repository!
 EOF
 }
 
+show_installation_summary() {
+    print_header "📊 Installation Summary"
+
+    local total=$((${#SUCCESSFUL_MODULES[@]} + ${#FAILED_MODULES[@]} + ${#SKIPPED_MODULES[@]}))
+
+    if [[ ${#SUCCESSFUL_MODULES[@]} -gt 0 ]]; then
+        printf "${GREEN}✓ Successfully installed (${#SUCCESSFUL_MODULES[@]}):${NC}\n"
+        for module in "${SUCCESSFUL_MODULES[@]}"; do
+            printf "  • %s\n" "$module"
+        done
+        echo
+    fi
+
+    if [[ ${#SKIPPED_MODULES[@]} -gt 0 ]]; then
+        printf "${YELLOW}⊘ Skipped (${#SKIPPED_MODULES[@]}):${NC}\n"
+        for module in "${SKIPPED_MODULES[@]}"; do
+            printf "  • %s\n" "$module"
+        done
+        echo
+    fi
+
+    if [[ ${#FAILED_MODULES[@]} -gt 0 ]]; then
+        printf "${RED}✗ Failed (${#FAILED_MODULES[@]}):${NC}\n"
+        for module in "${FAILED_MODULES[@]}"; do
+            printf "  • %s - %s\n" "$module" "${MODULE_RESULTS[$module]}"
+        done
+        echo
+        warning "Some modules failed to install. You can re-run the script to retry:"
+        info "  ./install.sh ${FAILED_MODULES[*]}"
+        echo
+    fi
+
+    if [[ ${#FAILED_MODULES[@]} -eq 0 && ${#SUCCESSFUL_MODULES[@]} -gt 0 ]]; then
+        print_success "All modules installed successfully! 🎉"
+    fi
+}
+
 check_requirements() {
     info "Checking requirements..."
-    
+
     # Check for Homebrew
     if ! command -v brew &> /dev/null; then
         warning "Homebrew not found. Installing Homebrew..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        if /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
+            # Add Homebrew to PATH for Apple Silicon Macs
+            if [[ -d "/opt/homebrew" ]]; then
+                eval "$(/opt/homebrew/bin/brew shellenv)"
+            elif [[ -d "/usr/local" ]]; then
+                eval "$(/usr/local/bin/brew shellenv)"
+            fi
+            success "Homebrew installed successfully"
+        else
+            error "Failed to install Homebrew. Some modules may fail."
+            warning "Continuing anyway..."
+        fi
+    else
+        success "Homebrew is already installed"
     fi
-    
+
     success "Requirements check complete"
 }
 
@@ -167,40 +228,76 @@ backup_existing_configs() {
 install_module_with_prompt() {
     local module="$1"
     local description="${MODULE_DESCRIPTIONS[$module]}"
-    
+
     # Auto-accept if -y flag is set
     if [[ "$AUTO_ACCEPT" == "true" ]]; then
         install_module "$module"
         return
     fi
-    
+
     # Ask user for confirmation
     if confirm "Install $module ($description)?"; then
         install_module "$module"
     else
         info "Skipping $module installation"
+        SKIPPED_MODULES+=("$module")
+        MODULE_RESULTS[$module]="skipped"
     fi
 }
 
 install_module() {
     local module="$1"
     local module_script="${DOTFILES_DIR}/modules/${module}.sh"
-    
+
     if [[ ! -f "$module_script" ]]; then
         error "Module script not found: $module_script"
+        FAILED_MODULES+=("$module")
+        MODULE_RESULTS[$module]="failed (script not found)"
+        if [[ "$CONTINUE_ON_ERROR" == "true" ]]; then
+            warning "Continuing with remaining modules..."
+            return 0
+        fi
         return 1
     fi
-    
+
     print_header "Installing $module"
-    
-    # Source the module script and run install function
-    source "$module_script"
-    
-    if declare -f "install_${module}" > /dev/null; then
-        "install_${module}"
-        success "$module installed successfully"
+
+    # Source the module script and run install function with error handling
+    if source "$module_script" 2>/dev/null; then
+        if declare -f "install_${module}" > /dev/null; then
+            # Run installation with error handling
+            if "install_${module}" 2>&1; then
+                success "$module installed successfully"
+                SUCCESSFUL_MODULES+=("$module")
+                MODULE_RESULTS[$module]="success"
+            else
+                error "$module installation failed"
+                FAILED_MODULES+=("$module")
+                MODULE_RESULTS[$module]="failed (install function error)"
+                if [[ "$CONTINUE_ON_ERROR" == "true" ]]; then
+                    warning "Continuing with remaining modules..."
+                    return 0
+                fi
+                return 1
+            fi
+        else
+            error "Install function not found for module: $module"
+            FAILED_MODULES+=("$module")
+            MODULE_RESULTS[$module]="failed (no install function)"
+            if [[ "$CONTINUE_ON_ERROR" == "true" ]]; then
+                warning "Continuing with remaining modules..."
+                return 0
+            fi
+            return 1
+        fi
     else
-        error "Install function not found for module: $module"
+        error "Failed to source module script: $module_script"
+        FAILED_MODULES+=("$module")
+        MODULE_RESULTS[$module]="failed (source error)"
+        if [[ "$CONTINUE_ON_ERROR" == "true" ]]; then
+            warning "Continuing with remaining modules..."
+            return 0
+        fi
         return 1
     fi
 }
