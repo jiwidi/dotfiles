@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
 
-# AeroSpace workspace indicator
+# AeroSpace workspace plugin for individual workspace items
+# Called with workspace ID as argument
 
-if command -v aerospace > /dev/null 2>&1; then
-    WORKSPACE=$(aerospace list-workspaces --focused)
-    sketchybar --set current_workspace label="󱂬 $WORKSPACE"
+# Get focused workspace from sketchybar's INFO variable or query directly
+if [ -n "$INFO" ]; then
+    FOCUSED="$INFO"
 else
-    sketchybar --set current_workspace label="󱂬 N/A"
+    FOCUSED=$(aerospace list-workspaces --focused)
+fi
+
+# Check if workspace has windows or is focused
+if [ "$1" = "$FOCUSED" ]; then
+    sketchybar --set space."$1" drawing=on background.drawing=on icon.highlight=on
+else
+    # Check if workspace has windows
+    if [ "$(aerospace list-windows --workspace "$1" | wc -l)" -gt 0 ]; then
+        sketchybar --set space."$1" drawing=on background.drawing=off icon.highlight=off
+    else
+        sketchybar --set space."$1" drawing=off
+    fi
 fi

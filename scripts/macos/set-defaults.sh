@@ -189,9 +189,11 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 echo ""
 echo "🧹 Cleanup"
-info "Removing duplicates in 'Open With' menu"
-/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
-    -kill -r -domain local -domain system -domain user
+# Note: Disabled on macOS 15+ as it breaks System Settings
+# info "Removing duplicates in 'Open With' menu"
+# /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+#     -kill -r -domain local -domain system -domain user
+info "Skipping LaunchServices reset (can break System Settings on macOS 15+)"
 
 echo ""
 echo "🔄 Restarting affected applications"

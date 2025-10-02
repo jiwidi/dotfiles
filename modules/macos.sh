@@ -25,14 +25,17 @@ install_macos() {
 
 install_macos_tools() {
     info "Installing macOS tools..."
-    
+
     # Install btop (better top)
     brew_install "btop"
-    
+
     # Install other useful tools
     brew_install "mas"  # Mac App Store CLI
     brew_install "duti" # Default app manager
-    
+
+    # Install Caffeine (keep Mac awake)
+    brew_install "keepingyouawake" true  # Modern Caffeine replacement
+
     success "macOS tools installed (configured via optimized shell)"
 }
 

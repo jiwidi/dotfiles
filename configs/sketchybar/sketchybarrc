@@ -31,16 +31,20 @@ default=(
 sketchybar --default "${default[@]}"
 
 ##### Left Items #####
-# AeroSpace workspace indicator
-sketchybar --add event aerospace_workspace_change
-sketchybar --add item current_workspace left \
-    --subscribe current_workspace aerospace_workspace_change \
-    --set current_workspace \
+# Workspace indicator
+sketchybar --add item workspace left \
+    --set workspace \
+    icon= \
+    icon.color=0xff89b4fa \
     background.color=0xff313244 \
     background.corner_radius=5 \
-    background.height=20 \
-    label="" \
-    script="$PLUGIN_DIR/aerospace.sh"
+    background.height=24 \
+    background.padding_left=8 \
+    background.padding_right=8 \
+    padding_left=10 \
+    padding_right=5 \
+    script="$PLUGIN_DIR/workspace.sh" \
+    --subscribe workspace aerospace_workspace_change
 
 # Front app
 sketchybar --add item front_app left \

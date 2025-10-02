@@ -85,6 +85,7 @@ setup_sketchybar_config() {
     debug "Setting up plugins..."
     local plugins=(
         "aerospace.sh"
+        "workspace.sh"
         "front_app.sh"
         "clock.sh"
         "battery.sh"

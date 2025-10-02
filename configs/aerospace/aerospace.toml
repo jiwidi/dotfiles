@@ -27,10 +27,17 @@ key-mapping.preset = 'qwerty'
 # Mouse follows focus when focus is moved with keyboard
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
+# Notify sketchybar when workspace changes (send focused workspace as INFO to all items)
+exec-on-workspace-change = [
+  '/bin/bash',
+  '-c',
+  '/opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change INFO=$AEROSPACE_FOCUSED_WORKSPACE',
+]
+
 # Gaps between windows (inner-*) and between monitor edges (outer-*)
 [gaps]
-inner.horizontal = 10
-inner.vertical = 10
+inner.horizontal = 8
+inner.vertical = 8
 outer.bottom = 3
 outer.left = 5
 outer.right = 5

@@ -2,8 +2,17 @@
 
 # Tool configurations for modern CLI tools
 
-# === exa (better ls) ===
-if command -v exa > /dev/null 2>&1; then
+# === eza (better ls - modern exa replacement) ===
+if command -v eza > /dev/null 2>&1; then
+    alias ls="eza --icons"
+    alias ll="eza --icons -l"
+    alias la="eza --icons -la"
+    alias lt="eza --icons --tree"
+    alias l="eza --icons -lah"
+    alias ltr="eza --icons -lah --sort=modified"
+    alias tree="eza --icons --tree"
+elif command -v exa > /dev/null 2>&1; then
+    # Fallback to exa if eza not installed yet
     alias ls="exa"
     alias ll="exa -l"
     alias la="exa -la"
